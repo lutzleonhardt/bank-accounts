@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2016",
+      "dom"
+    ]
+  },
+  "include": [
+    "electron/**/*.test.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
