@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { HttpModule } from '@angular/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MdListModule, MdCardModule, MdToolbarModule, MdIconModule } from '@angular/material'
+import { MatCardModule, MatToolbarModule, MatIconModule, MatButtonModule } from '@angular/material'
 
 import { AppComponent } from './app.component'
 
@@ -11,18 +10,17 @@ import { AppComponent } from './app.component'
   declarations: [
     AppComponent,
   ],
-  imports     : [
+  imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
     BrowserAnimationsModule,
-    MdListModule,
-    MdCardModule,
-    MdToolbarModule,
-    MdIconModule
+    MatCardModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule
   ],
-  providers   : [],
-  bootstrap   : [ AppComponent ],
+  providers: [],
+  bootstrap: [ AppComponent ],
 })
 export class AppModule {
 }

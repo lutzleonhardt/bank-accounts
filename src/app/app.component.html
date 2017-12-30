@@ -1,15 +1,21 @@
-<md-toolbar color="primary">
-  <span>Toolbar</span>
-</md-toolbar>
+<mat-toolbar color="primary">
+  <span>PPE-Analyzer</span>
 
-<md-card>
-  <md-list>
-    <md-list-item> Pepper 1</md-list-item>
-    <md-list-item> Salt 1</md-list-item>
-    <md-list-item> Paprika 1</md-list-item>
-    <md-divider></md-divider>
-    <md-list-item> Pepper 2</md-list-item>
-    <md-list-item> Salt 2</md-list-item>
-    <md-list-item> Paprika 2</md-list-item>
-  </md-list>
-</md-card>
+  <span class="example-spacer"></span>
+
+  <button mat-mini-fab title="Login"
+          *ngIf="!accessToken"
+          (click)="loginAsync()">
+    <mat-icon>account_box</mat-icon>
+  </button>
+
+  <button mat-mini-fab title="Logout"
+          *ngIf="accessToken"
+          (click)="logout()">
+    <mat-icon>lock</mat-icon>
+  </button>
+
+</mat-toolbar>
+
+<mat-card>
+</mat-card>

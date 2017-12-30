@@ -26,7 +26,7 @@ module.exports = {
         loader: 'ts-loader',
         exclude: /node_modules/,
         options: {
-          configFileName: 'tsconfig.electron.json',
+          configFile: 'tsconfig.electron.json',
         },
       },
     ],

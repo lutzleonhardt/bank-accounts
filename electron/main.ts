@@ -1,13 +1,17 @@
 import { app, BrowserWindow } from 'electron'
 import * as url from 'url'
-import { registerBankingCalls } from './banking'
+import { registerFbApi } from './facebook'
 
 let win: any = null
 
-registerBankingCalls()
-
 function createWindow() {
-  win = new BrowserWindow({ width: 1000, height: 600, webPreferences: { webSecurity: false } })
+  win = new BrowserWindow({
+    width: 1000,
+    height: 600,
+    webPreferences: { webSecurity: false },
+  })
+
+  registerFbApi(win)
 
   if (process.env.NODE_ENV === 'development') {
     win.loadURL('http://localhost:4200')
@@ -16,7 +20,7 @@ function createWindow() {
     win.loadURL(url.format({
       pathname: `${__dirname}/index.html`,
       protocol: 'file:',
-      slashes : true,
+      slashes: true,
     }))
   }
 
