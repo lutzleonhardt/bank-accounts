@@ -5,3 +5,20 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+
+.primary-card {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  top: 80px;
+}
+
+.primary-card > .primary-card--spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+

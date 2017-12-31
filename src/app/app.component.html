@@ -4,18 +4,19 @@
   <span class="example-spacer"></span>
 
   <button mat-mini-fab title="Login"
-          *ngIf="!accessToken"
-          (click)="loginAsync()">
+          *ngIf="!(accessToken$ | async)"
+          (click)="login()">
     <mat-icon>account_box</mat-icon>
   </button>
 
   <button mat-mini-fab title="Logout"
-          *ngIf="accessToken"
+          *ngIf="accessToken$ | async"
           (click)="logout()">
     <mat-icon>lock</mat-icon>
   </button>
 
 </mat-toolbar>
 
-<mat-card>
+<mat-card class="primary-card">
+  <mat-progress-spinner class="primary-card--spinner" mode="indeterminate" *ngIf="(progess$ | async) > 0"></mat-progress-spinner>
 </mat-card>

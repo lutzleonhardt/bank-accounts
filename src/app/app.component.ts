@@ -1,33 +1,29 @@
-import { ApplicationRef, ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core'
-
-import { FB_LOGIN_REQUEST, FB_LOGIN_RESPONSE, FB_LOGOUT } from '../../electron/fb-actions.types'
-import { fbLoginRequest, fbLogout, IFbAction } from '../../electron/fb-actions.creators'
-
-const w = window as any
-const { ipcRenderer } = w.electron
+import { Component, ChangeDetectionStrategy } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { Login, Logout } from 'app/core/actions/facebook'
+import { Observable } from 'rxjs/Observable'
+import { getFacebookAccessToken, getFacebookProgress, State } from 'app/reducers'
 
 @Component({
   selector: 'll-app-root',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  private accessToken: string
+  private accessToken$: Observable<string>
+  private progess$: Observable<number>
 
-  public constructor(private zone: NgZone) {
+  public constructor(private store: Store<State>) {
+    this.accessToken$ = this.store.select(getFacebookAccessToken)
+    this.progess$ = this.store.select(getFacebookProgress)
+  }
+
+  public login() {
+    this.store.dispatch(new Login())
   }
 
   public logout() {
-    ipcRenderer.send(FB_LOGOUT, fbLogout())
-    this.accessToken = null
-  }
-
-  public loginAsync() {
-    ipcRenderer.send(FB_LOGIN_REQUEST, fbLoginRequest())
-    ipcRenderer.on(FB_LOGIN_RESPONSE, (event: any, action: IFbAction) => {
-      this.zone.run(() => {
-        this.accessToken = action.data.accessToken
-      })
-    })
+    this.store.dispatch(new Logout())
   }
 }

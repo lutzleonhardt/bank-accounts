@@ -1,10 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
-import { FormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatCardModule, MatToolbarModule, MatIconModule, MatButtonModule } from '@angular/material'
+import { BrowserModule } from '@angular/platform-browser'
+import { EffectsModule } from '@ngrx/effects'
+import { FormsModule } from '@angular/forms'
+import { MatCardModule, MatToolbarModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule } from '@angular/material'
+import { NgModule } from '@angular/core'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { StoreModule } from '@ngrx/store'
 
 import { AppComponent } from './app.component'
+import { environment } from 'environments/environment'
+import { metaReducers, reducers } from 'app/reducers'
+import { FacebookService } from 'app/core/services/facebook.service'
+import { FacebookEffects } from 'app/core/effects/facebook'
 
 @NgModule({
   declarations: [
@@ -14,12 +21,20 @@ import { AppComponent } from './app.component'
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
+
+    // ngrx
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument({}) : [],
+    EffectsModule.forRoot([FacebookEffects]),
+
+    // Material UI
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [ FacebookService ],
   bootstrap: [ AppComponent ],
 })
 export class AppModule {
