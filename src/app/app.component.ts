@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { Login, Logout } from 'app/core/actions/facebook'
 import { Observable } from 'rxjs/Observable'
+
 import { getFacebookAccessToken, getFacebookProgress, State } from 'app/reducers'
 
 @Component({

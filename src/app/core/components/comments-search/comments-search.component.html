@@ -1,0 +1,15 @@
+<div class="search-form">
+  <mat-form-field class="search-form__field" hintLabel="Max 20 numbers">
+    <input matInput #inputPageId maxlength="20" placeholder="Page ID" value="344654102215523">
+    <mat-hint align="end">{{inputPageId.value?.length || 0}}/20</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field class="search-form__field" hintLabel="Max 20 numbers">
+    <input matInput #inputPostId maxlength="20" placeholder="Post ID" value="1981961948484722">
+    <mat-hint align="end">{{inputPostId.value?.length || 0}}/20</mat-hint>
+  </mat-form-field>
+
+  <div class="search-form__button">
+    <button mat-raised-button color="primary" (click)="getPostComments()">Get comments</button>
+  </div>
+</div>

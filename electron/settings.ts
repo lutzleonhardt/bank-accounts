@@ -1,4 +1,4 @@
 export const settings = {
   fbClientId: '428349214246482',
-  fbScopes: 'public_profile'
+  fbScopes: 'email,public_profile,read_custom_friendlists,user_about_me,user_birthday,user_education_history,user_friends,user_hometown,user_location,user_relationship_details,user_relationships,user_religion_politics,user_work_history,user_actions.books,user_actions.fitness,user_actions.music,user_actions.news,user_actions.video,user_games_activity,user_likes,user_photos,user_posts,user_tagged_places,user_videos,user_website,user_events,user_managed_groups,publish_actions,rsvp_event,ads_management,ads_read,business_management,read_audience_network_insights,read_insights,manage_pages,pages_manage_cta,pages_manage_instant_articles,pages_show_list,read_page_mailboxes,publish_pages,pages_messaging,pages_messaging_phone_number,pages_messaging_subscriptions,instagram_basic,instagram_manage_comments,instagram_manage_insights,user_status'
 }

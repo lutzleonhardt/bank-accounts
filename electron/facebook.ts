@@ -3,8 +3,8 @@
 import { FB } from 'fb'
 import { ipcMain, BrowserWindow } from 'electron'
 
-import { FB_LOGIN_REQUEST, FB_LOGIN_RESPONSE, FB_LOGOUT } from './fb-actions.types'
-import { fbLoginResponse } from './fb-actions.creators'
+import { FB_GET_POSTCOMMENTS_REQUEST, FB_GET_POSTCOMMENTS_RESPONSE, FB_LOGIN_REQUEST, FB_LOGIN_RESPONSE, FB_LOGOUT } from './fb-actions.types'
+import { fbGetPostCommentsResponse, fbLoginResponse, IFbAction } from './fb-actions.creators'
 import { settings } from './settings'
 
 const redirectUrl = 'https://www.facebook.com/connect/login_success.html'
@@ -54,6 +54,7 @@ function registerFbLoginRequest(mainWindow: Electron.BrowserWindow) {
       const [ accessToken, error ] = getFbToken(newUrl)
 
       if (accessToken) {
+        FB.options({version: 'v2.5'})
         FB.setAccessToken(accessToken)
         event.sender.send(FB_LOGIN_RESPONSE, fbLoginResponse(accessToken))
         fbAuthWindow.close()
@@ -72,6 +73,7 @@ function registerFbLoginRequest(mainWindow: Electron.BrowserWindow) {
 function registerFbLogout(mainWindow: BrowserWindow) {
   ipcMain.on(FB_LOGOUT, () => {
     const fbAuthWindow = getFbAuthWindow(mainWindow)
+    fbAuthWindow.webContents.session.clearStorageData()
     const accessToken = FB.getAccessToken()
     const url = getFbLogoutUrl(accessToken)
     fbAuthWindow.loadURL(url)
@@ -82,7 +84,22 @@ function registerFbLogout(mainWindow: BrowserWindow) {
   })
 }
 
+function registerFbGetPostComments() {
+  ipcMain.on(FB_GET_POSTCOMMENTS_REQUEST, (event: any, action: IFbAction) => {
+    const url = `${action.data.pageId}_${action.data.postId}/comments`
+    console.log(url)
+    FB.api(url, { fields: ['user_likes', 'message', 'message_tags' , 'comments', 'from{id,name}'] })
+      .then((result: any) => {
+        return event.sender.send(FB_GET_POSTCOMMENTS_RESPONSE, fbGetPostCommentsResponse(result))
+      })
+      .catch((error: any) => {
+        console.error('error', error)
+        return event.sender.send(FB_GET_POSTCOMMENTS_RESPONSE, fbGetPostCommentsResponse(null, error.message))})
+  })
+}
+
 export function registerFbApi(mainWindow: BrowserWindow) {
   registerFbLoginRequest(mainWindow)
   registerFbLogout(mainWindow)
+  registerFbGetPostComments()
 }
